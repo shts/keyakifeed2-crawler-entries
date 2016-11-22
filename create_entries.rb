@@ -1,32 +1,16 @@
-# URLにアクセスするためのライブラリを読み込む
-require 'open-uri'
-# HTMLをパースするためのライブラリを読み込む
-require 'nokogiri'
-# 日付ライブラリの読み込み
-require "date"
+require 'bundler'
+require 'kconv'
+Bundler.require # gemを一括require
 
+require "date"
 require "uri"
 
-require './app'
-
+require_relative 'tables'
 require_relative 'useragent'
 
 #OfficialSiteUrl = "http://blog.keyakizaka46.com/mob/news/diarKiji.php?site=k46&cd=member"
 BaseUrl = "http://www.keyakizaka46.com"
 BlogBaseUrl = "http://www.keyakizaka46.com/mob/news/diarKiji.php?cd=member&ct="
-
-if File.exist?("database.yml")
-  #Local
-  ActiveRecord::Base.configurations = YAML.load_file('database.yml')
-  ActiveRecord::Base.establish_connection(:development)
-else
-  #Heroku
-  ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
-end
-
-class Entry < ActiveRecord::Base
-  belongs_to :member
-end
 
 def parse_for_key key
   return if key == nil
