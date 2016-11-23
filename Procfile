@@ -1,1 +1,1 @@
-worker: bundle exec ruby create_entries.rb
+worker: bundle exec ruby app.rb

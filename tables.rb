@@ -32,4 +32,13 @@ module Api
   class Entry < ActiveRecord::Base
     belongs_to :member
   end
+
+  class Report < ActiveRecord::Base
+  end
+
+  class Matome < ActiveRecord::Base
+  end
+
+  class Fcm < ActiveRecord::Base
+  end
 end
