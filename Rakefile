@@ -7,5 +7,5 @@ if File.exist?("database.yml")
   ActiveRecord::Base.establish_connection(:development)
 else
   #Heroku
-  ActiveRecord::Base.establish_connection(ENV['HEROKU_POSTGRESQL_AQUA'])
+  ActiveRecord::Base.establish_connection(ENV['HEROKU_POSTGRESQL_AQUA_URL'])
 end
