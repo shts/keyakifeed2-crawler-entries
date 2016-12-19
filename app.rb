@@ -9,8 +9,8 @@ require_relative 'tables'
 require_relative 'pusher'
 require_relative 'useragent'
 require_relative 'entrycrawler'
-require_relative 'matomecrawler'
 require_relative 'reportcrawler'
+require_relative 'matomecrawler'
 
 ec = EntryCrawler.new
 rc = ReportCrawler.new

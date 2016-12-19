@@ -12,7 +12,7 @@ require_relative 'useragent'
 class EntryCrawler
 
   def routine_time
-    35
+    60
   end
 
   ### 記事収集処理

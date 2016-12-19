@@ -12,7 +12,7 @@ require_relative 'useragent'
 class ReportCrawler
 
   def routine_time
-    60
+    60 * 30
   end
 
   BaseReportUrl = "http://www.keyakizaka46.com/mob/news/diarShw.php?cd=report"
