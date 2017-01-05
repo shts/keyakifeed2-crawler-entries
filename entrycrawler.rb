@@ -34,7 +34,6 @@ class EntryCrawler
 
   # 1記事から情報を取得する
   def parsepage url, loop=true
-    puts "parsepage in : #{url}"
     begin
       page = Nokogiri::HTML(open(url, 'User-Agent' => UserAgents.agent))
 
@@ -104,6 +103,7 @@ class EntryCrawler
   end
 
   def routine_work
+    puts "entrycrawler:routine_work in"
     Api::Member.all.order(key: :desc).each do |member|
       parse_for_key(member['key']) { |data|
         save_data(data, member) { |r, e|
@@ -111,5 +111,6 @@ class EntryCrawler
         } if is_new? data
       }
     end
+    puts "entrycrawler:routine_work out"
   end
 end

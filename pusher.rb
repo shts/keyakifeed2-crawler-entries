@@ -11,13 +11,14 @@ class Push
   GCM_PATH = "/fcm/send"
 
   def push_entry e
+    puts "pusher:push_entry in"
     c = 0;
     while true do
       ids = Array.new
 
       fcms = Api::Fcm.limit(1000).offset(c * 1000).order(id: :desc)
       if fcms.count == 0 then
-        puts "finish"
+        puts "pusher:push_entry out"
         break
       end
 
@@ -31,13 +32,14 @@ class Push
   end
 
   def push_report r
+    puts "pusher:push_report in"
     c = 0;
     while true do
       ids = Array.new
 
       fcms = Api::Fcm.limit(1000).offset(c * 1000).order(id: :desc)
       if fcms.count == 0 then
-        puts "finish"
+        puts "pusher:push_report out"
         break
       end
 
@@ -93,6 +95,7 @@ class Push
     end
 
     def post message, ids
+      puts "pusher:post in"
       # HTTPS POST実行
       http = Net::HTTP.new(GCM_HOST, 443);
       http.use_ssl = true
@@ -110,27 +113,31 @@ class Push
           # InternalServerError,Unavailable はリトライする
           if r.has_value?('InternalServerError') || r.has_value?('Unavailable') then
             # TODO: retry
+            puts "pusher:post:error:retry -> #{r}"
+            puts "pusher:post out"
             return
           end
           # 失敗時
           # {"error":"InvalidRegistration"}
           if r.has_key?('error') then
+            puts "pusher:post:error -> #{r}"
             if r.has_value?('MissingRegistration') || r.has_value?('InvalidRegistration') || r.has_value?('NotRegistered') then
               # 不要なキーは削除する
-              puts "NG:delete -> #{ids[i]}"
+              puts "pusher:post:error:delete -> #{ids[i]}"
               fcm = Api::Fcm.where(reg_id: ids[i]).first
               if fcm != nil then
                 puts fcm.destroy
               end
             else
-              puts "NG:unknown -> #{ids[i]}"
+              puts "pusher:post:error:unknown -> #{ids[i]}"
             end
           else
             # 成功時
             # {"message_id":"0:1479889709159316%d8e5392f6fbc52cd"}
-            puts "OK -> #{ids[i]}"
+            puts "pusher:post:success -> #{ids[i]}"
           end
         }
       }
+      puts "pusher:post out"
     end
 end

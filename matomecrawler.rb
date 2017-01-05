@@ -38,6 +38,7 @@ class MatomeCrawler
   end
 
   def routine_work
+    puts "matomecrawler:routine_work in"
     urlList = [
       "http://keyakizaka46ch.jp",
       "http://keyakizaka1.blog.jp",
@@ -67,6 +68,7 @@ class MatomeCrawler
         end
       end
     end
+    puts "matomecrawler:routine_work out"
   end
 
 end

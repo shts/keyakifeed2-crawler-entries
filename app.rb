@@ -20,12 +20,10 @@ EM.run do
   EM::PeriodicTimer.new(ec.routine_time) do
     ec.routine_work
   end
-=begin
   EM::PeriodicTimer.new(rc.routine_time) do
     rc.routine_work
   end
   EM::PeriodicTimer.new(mc.routine_time) do
     mc.routine_work
   end
-=end
 end

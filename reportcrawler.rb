@@ -102,11 +102,13 @@ class ReportCrawler
   end
 
   def routine_work
+    puts "reportcrawler:routine_work in"
     fetch_report { |data|
       save_data(data) { |result, report|
         Push.new.push_report report
       } if is_new? data
     }
+    puts "reportcrawler:routine_work out"
   end
 
 end
