@@ -64,7 +64,7 @@ class MatomeCrawler
           matome[:entry_categories] = entry.categories
           matome.save
         else
-          puts "already saved url -> #{entry.url}"
+          #puts "matomecrawler:already saved url -> #{entry.url}"
         end
       end
     end

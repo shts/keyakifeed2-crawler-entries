@@ -89,12 +89,14 @@ class EntryCrawler
   end
 
   def save_data data, member
+    puts "entrycrawler:save_data in"
     data[:member_id] = member['id']
     entry = Api::Entry.new
     data.each { |key, val|
       entry[key] = val
     }
     result = entry.save
+    puts "entrycrawler:save_data out result->#{result}"
     yield(result, entry) if block_given?
   end
 
