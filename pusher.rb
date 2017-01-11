@@ -57,9 +57,9 @@ class Push
     def send_entry_message ids, e
       message = {
         "registration_ids" => ids,
+        "priority" => "high",
         "collapse_key" => "collapse_key",
         "delay_while_idle" => false,
-        "time_to_live" => 60,
         "data" => { "_object_key" => "object_entry",
                     "_id" => e['id'],
                     "_title" => e['title'],
@@ -78,9 +78,9 @@ class Push
     def send_report_message ids, r
       message = {
         "registration_ids" => ids,
+        "priority" => "high",
         "collapse_key" => "collapse_key",
         "delay_while_idle" => false,
-        "time_to_live" => 60,
         "data" => { "_object_key" => "object_report",
                     "_id" => r['id'],
                     "_title" => r['title'],
