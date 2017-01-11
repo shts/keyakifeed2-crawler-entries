@@ -11,7 +11,7 @@ class Push
   GCM_PATH = "/fcm/send"
 
   def push_entry e
-    puts "pusher:push_entry in"
+    puts "pusher:push_entry in -> #{e['title']}"
     c = 0;
     while true do
       ids = Array.new
