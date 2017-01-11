@@ -58,7 +58,6 @@ class Push
       message = {
         "registration_ids" => ids,
         "priority" => "high",
-        "collapse_key" => "collapse_key",
         "delay_while_idle" => false,
         "data" => { "_object_key" => "object_entry",
                     "_id" => e['id'],
@@ -79,7 +78,6 @@ class Push
       message = {
         "registration_ids" => ids,
         "priority" => "high",
-        "collapse_key" => "collapse_key",
         "delay_while_idle" => false,
         "data" => { "_object_key" => "object_report",
                     "_id" => r['id'],
