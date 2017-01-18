@@ -57,10 +57,12 @@ class ReportCrawler
       end
     rescue OpenURI::HTTPError => ex
       puts "******************************************************************************************"
-      puts "HTTPError : url(#{data[:url]}) retry!!!"
+      puts "HTTPError : url(#{ex.message}) retry!!!"
       puts "******************************************************************************************"
-      sleep 5
-      retry
+      if ex.message != "404 Not Found" then
+        sleep 5
+        retry
+      end
     end
   end
 
