@@ -57,7 +57,7 @@ class ReportCrawler
       end
     rescue OpenURI::HTTPError => ex
       puts "******************************************************************************************"
-      puts "HTTPError : url(#{url}) retry!!!"
+      puts "HTTPError : url(#{data[:url]}) retry!!!"
       puts "******************************************************************************************"
       sleep 5
       retry
