@@ -17,7 +17,7 @@ class EntryCrawler
 
   ### 記事収集処理
   BaseUrl = "http://www.keyakizaka46.com"
-  BlogBaseUrl = "http://www.keyakizaka46.com/mob/news/diarKiji.php?cd=member&ct="
+  BlogBaseUrl = "http://www.keyakizaka46.com/s/k46o/diary/member/list?ct="
 
   def parse_for_key key
     return if key == nil
@@ -38,14 +38,14 @@ class EntryCrawler
       page = Nokogiri::HTML(open(url, 'User-Agent' => UserAgents.agent))
 
       page.css('article').each do |article|
-
         data = {}
-        data[:title] = normalize article.css('.box-ttl > h3').text
+        data[:title] = normalize article.css('.box-ttl > h3 > a').text
         data[:published] = normalize article.css('.box-bottom > ul > li')[0].text
         data[:published] = DateTime.parse(data[:published])
 
         data[:url] = BaseUrl + article.css('.box-bottom > ul > li')[1].css('a')[0][:href]
-        data[:url] = url_normalize data[:url]
+        data[:url] = normalize data[:url]
+        puts data[:url]
 
         image_url_list = Array.new()
         article.css('.box-article').css('img').each do |img|
@@ -73,20 +73,28 @@ class EntryCrawler
     end
   end
 
+  # 不要な改行を取り除く
   def normalize str
     str.gsub(/(\r\n|\r|\n|\f)/,"").strip
   end
 
+=begin
   def url_normalize url
-    # before
+    # v1
+    # [in]
     # http://www.keyakizaka46.com/mob/news/diarKijiShw.php?site=k46o&ima=0445&id=405&cd=member
-    # after
+    # [OUT]
     # http://www.keyakizaka46.com/mob/news/diarKijiShw.php?id=405&cd=member
+
+    # v2
+    # [in]
+    # http://www.keyakizaka46.com/s/k46o/diary/detail/7358?ima=0000&cd=member
     uri = URI.parse(url)
     q_array = URI::decode_www_form(uri.query)
     q_hash = Hash[q_array]
     "http://www.keyakizaka46.com/mob/news/diarKijiShw.php?id=#{q_hash['id']}&cd=member"
   end
+=end
 
   def save_data data, member
     puts "entrycrawler:save_data in"
