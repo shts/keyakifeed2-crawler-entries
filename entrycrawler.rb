@@ -49,7 +49,13 @@ class EntryCrawler
 
         image_url_list = Array.new()
         article.css('.box-article').css('img').each do |img|
-          image_url_list.push(BaseUrl + img[:src])
+          # http://cdn.keyakizaka46.com/images/14/12a/1059f8959c2e191c5cf15899f22be.jpg
+          uri = URI.parse(img[:src])
+          if uri.host != nil && uri.scheme != nil then
+            image_url_list.push(img[:src])
+          else
+            image_url_list.push(BaseUrl + img[:src])
+          end
         end
         data[:image_url_list] = image_url_list
 
