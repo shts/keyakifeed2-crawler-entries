@@ -45,7 +45,6 @@ class EntryCrawler
 
         data[:url] = BaseUrl + article.css('.box-bottom > ul > li')[1].css('a')[0][:href]
         data[:url] = normalize data[:url]
-        puts data[:url]
 
         image_url_list = Array.new()
         article.css('.box-article').css('img').each do |img|
@@ -81,8 +80,22 @@ class EntryCrawler
 
   # 不要な改行を取り除く
   def normalize str
-    str.gsub(/(\r\n|\r|\n|\f)/,"").strip
+    url = str.gsub(/(\r\n|\r|\n|\f)/,"").strip
+    url = url.gsub("http//www.keyakizaka46.com", "") if invalid? url
+    url
   end
+
+  # 不正なurlかどうか
+  # 暫定
+  def invalid? url
+    begin
+      u = URI.parse(url)
+      u.host == "www.keyakizaka46.comhttp" || u.host== "cdn.keyakizaka46.comhttp"
+    rescue URI::InvalidURIError => e
+      true
+    end
+  end
+
 
 =begin
   def url_normalize url
